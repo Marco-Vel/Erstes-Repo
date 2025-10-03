@@ -8,8 +8,8 @@ def Zahlenraten():
 
         spieler = input("Ich habe mir eine Zahl zwischen 1 und 100 ausgedacht.\n" \
         "Rate mal an welche Zahl ich denke:\n")
-
-        if int in spieler:
+        try:
+            spieler = int(spieler)
             if (spieler == computer):
                 versuche = versuche + 1
                 print("Du hast meine Zahl erraten!")
@@ -27,7 +27,7 @@ def Zahlenraten():
                 print("Deine Zahl ist kleiner als meine...")
                 versuche = versuche + 1
                 return
-        else:
+        except:
             print("Gebe eine Zahl an!")
 
 Zahlenraten()
