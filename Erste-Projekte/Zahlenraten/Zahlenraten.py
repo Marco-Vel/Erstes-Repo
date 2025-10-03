@@ -3,9 +3,9 @@ import random; import time
 def Zahlenraten():
     computer = random.randint(1,100)
 
+    versuche = 0
+    
     while True:
-        versuche = 0
-
         spieler = input("Ich habe mir eine Zahl zwischen 1 und 100 ausgedacht.\n" \
         "Rate mal an welche Zahl ich denke:\n")
         try:
