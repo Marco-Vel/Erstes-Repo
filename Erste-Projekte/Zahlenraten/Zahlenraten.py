@@ -34,4 +34,10 @@ def Zahlenraten():
             time.sleep(0.75)
             return
 
-Zahlenraten()
+while True:
+    Zahlenraten()
+    q = input("Spiel erneut spielen?\n>Ja\n>Nein\n>").lower()
+    if(q == "nein"):
+        print("Bis zum nächsten Mal!")
+        time.sleep(0.75)
+        break
