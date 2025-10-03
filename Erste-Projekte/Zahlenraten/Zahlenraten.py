@@ -1,4 +1,4 @@
-import random
+import random; import time
 
 def Zahlenraten():
     computer = random.randint(1,100)
@@ -15,19 +15,25 @@ def Zahlenraten():
                 print("Du hast meine Zahl erraten!")
                 if(versuche == 1):
                     print(f"Du hast einen Versuch gebraucht!")
+                    time.sleep(0.75)
                     break
                 else:
                     print(f"Du hast {versuche} Versuche gebraucht!")
+                    time.sleep(0.75)
                     break
             elif (spieler >= computer):
                 print("Deine Zahl ist größer als meine...")
+                time.sleep(0.75)
                 versuche = versuche + 1
                 return
             elif (computer >= spieler):
                 print("Deine Zahl ist kleiner als meine...")
+                time.sleep(0.75)
                 versuche = versuche + 1
                 return
-        except:
+        except TypeError:
             print("Gebe eine Zahl an!")
+            time.sleep(0.75)
+            return
 
 Zahlenraten()
