@@ -4,7 +4,7 @@ def Zahlenraten():
     computer = random.randint(1,100)
 
     while True:
-        versuche = None
+        versuche = 0
 
         spieler = input("Ich habe mir eine Zahl zwischen 1 und 100 ausgedacht.\n" \
         "Rate mal an welche Zahl ich denke:\n")
@@ -25,12 +25,10 @@ def Zahlenraten():
                 print("Deine Zahl ist größer als meine...")
                 time.sleep(0.75)
                 versuche = versuche + 1
-                return
             elif (computer >= spieler):
                 print("Deine Zahl ist kleiner als meine...")
                 time.sleep(0.75)
                 versuche = versuche + 1
-                return
         except TypeError:
             print("Gebe eine Zahl an!")
             time.sleep(0.75)
