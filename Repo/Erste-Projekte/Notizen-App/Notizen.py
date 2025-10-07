@@ -12,31 +12,35 @@ hauptmenu_optionen = ["Notiz hinzufügen", "Notizen ansehen", "Notizen löschen"
 
 def notiz_hinzufuegen():
     while True:
-        print(">>>Notiz hinzufügen")
         titel = input("Gebe den Titel der Datei an:\n").lower()
         inhalt = input("Gebe den Inhalt der Datei an:\n")
 
         datei_pfad = ordner / f"{titel}.txt"
         with open(datei_pfad, "w", encoding="utf-8") as datei:
             datei.write(inhalt)
-        print(f"Notiz {inhalt} gespeichert...")
+        print(f"Notiz {inhalt} gespeichert...\n")
         break
 
 def notizen_ansehen():
 
     while True:
-        dateien = [f for f in ordner.iterdir() if f.is_file()]
-        print(f">>>Notizen ansehen\n")
-        for i, datei in enumerate(dateien, start=1):
-            print(f"{i}>{datei.name}")
+        update_dateien_anzahl()
+        if dateien_anzahl >= 1:
+            dateien = [f for f in ordner.iterdir() if f.is_file()]
+            print(f">>>Notizen ansehen\n")
+            for i, datei in enumerate(dateien, start=1):
+                print(f"{i}>{datei.name}")
 
-        input("\n>(Enter zum fortfahren)\n")
-        break
+            input("\n>(Enter zum fortfahren)\n")
+            break
+        else:
+            input("Keine Dateien vorhanden.\n(Enter zum fortfahren)")
+            break
 
 def notizen_loeschen():
     while True:
         update_dateien_anzahl()
-        if dateien_anzahl >= 0:
+        if dateien_anzahl >= 1:
             dateien = [f.name for f in ordner.iterdir() if f.is_file()]
             print("\nAktuelle dateien im Ordner:\n")
             for i, datei in enumerate(dateien, start=1):
@@ -47,24 +51,32 @@ def notizen_loeschen():
                     sicher_abfrage = input("Diese Datei wird gelöscht, bist du dir sicher?\n>Ja\n>Nein\n>>>").lower()
 
                     if sicher_abfrage == "ja":
-                        print("gelöscht")
+                        datei = ordner / angabe_loeschen
+
+                        if datei.exists:
+                            print(f"{angabe_loeschen} gefunden\n")
+                            datei.unlink()
+                            input(f"{angabe_loeschen} wurde entfernt.\n(Enter zum fortfahren)\n")
+                        else:
+                            print("Ein Fehler ist aufgetreten")
 
                     elif sicher_abfrage not in ["nein", "ja"]:
                         value_input = input("Gebe eine Option an oder verlasse mit(q)")
                         if value_input == "q":
                             break
-
                     elif sicher_abfrage == "nein":
                         print(f"{angabe_loeschen} wurde behalten.")
 
                     break
                 else:
                     raise NameError
-            except:
-                input("Diese Datei existiert nicht...\n\n(Weiter mit Enter)\n")
+            except Exception as e:
+                input("Fehler:", e, "\n\n(Enter zum fortfahren)\n")
+                ordner.mkdir(exist_ok = True)
                 break
         else:
             input("Keine Dateien gespeichert...\n(Enter zum fortfahren)")
+            break
             
 hauptmenu_funktionen = [notiz_hinzufuegen, notizen_ansehen, notizen_loeschen]
 
@@ -80,12 +92,13 @@ def hauptmenu():
             auswahl_num = int(auswahl)
             if 1 <= auswahl_num <= len(hauptmenu_optionen):
                 gewählte_option = hauptmenu_optionen[auswahl_num - 1]
-                print(f"Hauptmenu > {gewählte_option}")
+                print(f"Hauptmenu > {gewählte_option}\n")
                 hauptmenu_funktionen[auswahl_num - 1]()
                 
             else:
                 print("Wähle eine Option...")
-        except:
-            print("Gebe eine Zahl an...")
+        except Exception as e:
+            print("Fehler:", e)
+            ordner.mkdir(exist_ok = True)
 
 hauptmenu()
